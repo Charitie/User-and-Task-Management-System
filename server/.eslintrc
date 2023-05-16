@@ -2,7 +2,8 @@
     "root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": [
-      "@typescript-eslint"
+      "@typescript-eslint",
+      "prettier"
     ],
     "extends": [
       "eslint:recommended",
@@ -10,10 +11,12 @@
       "plugin:@typescript-eslint/recommended",
       "plugin:@shopify/esnext",
       "plugin:@shopify/typescript",
-      "plugin:@shopify/node"
+      "plugin:@shopify/node",
+      "prettier"
     ],
     "rules": { 
         "no-console": 1,
-        "no-loops/no-loops": 2
+        "no-loops/no-loops": 2,
+        "prettier/prettier": 2
     }
   }

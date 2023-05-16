@@ -7,3 +7,4 @@ There are three modes for a rule in eslint: off, warn, and error.
 
 https://khalilstemmler.com/blogs/typescript/eslint-for-typescript/ 
 https://github.com/Shopify/web-configs/tree/main/packages/eslint-plugin 
+https://khalilstemmler.com/blogs/tooling/prettier/ 
