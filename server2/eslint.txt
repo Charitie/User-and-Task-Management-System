@@ -1,0 +1,10 @@
+Rules
+There are three modes for a rule in eslint: off, warn, and error.
+
+"off" means 0 (turns the rule off completely)
+"warn" means 1 (turns the rule on but won't make the linter fail)
+"error" means 2 (turns the rule on and will make the linter fail)
+
+https://khalilstemmler.com/blogs/typescript/eslint-for-typescript/ 
+https://github.com/Shopify/web-configs/tree/main/packages/eslint-plugin 
+https://khalilstemmler.com/blogs/tooling/prettier/ 
