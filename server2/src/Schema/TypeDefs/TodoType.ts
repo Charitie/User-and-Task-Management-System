@@ -1,8 +1,8 @@
 import {
   GraphQLObjectType,
-  GraphQLID,
   GraphQLString,
-  GraphQLBoolean
+  GraphQLBoolean,
+  GraphQLID
 } from 'graphql';
 
 export const TodoType = new GraphQLObjectType({
@@ -14,3 +14,9 @@ export const TodoType = new GraphQLObjectType({
     completed: { type: GraphQLBoolean }
   })
 });
+
+export interface ITodo {
+  task: string;
+  description: string;
+  completed: boolean;
+}

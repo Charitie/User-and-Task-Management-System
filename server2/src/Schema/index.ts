@@ -1,5 +1,6 @@
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
 import { GET_TODO_LIST } from './Queries/Todo';
+import { ADD_TODO, DELETE_TODO, UPDATE_TASK } from './Mutations/Todo';
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQuery',
@@ -10,7 +11,11 @@ const RootQuery = new GraphQLObjectType({
 
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
-  fields: {}
+  fields: {
+    addTodo: ADD_TODO,
+    deleteTodo: DELETE_TODO,
+    updateTask: UPDATE_TASK
+  }
 });
 
 export const schema = new GraphQLSchema({

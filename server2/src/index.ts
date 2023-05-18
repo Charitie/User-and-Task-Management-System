@@ -28,6 +28,7 @@ const main = async () => {
   });
 
   connect();
+
   app.listen(port, () => console.log('Server listening on port ' + port));
 };
 

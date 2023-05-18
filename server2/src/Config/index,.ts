@@ -11,7 +11,8 @@ const envVariablesSchema = joi
       .required(),
     PORT: joi.number().default(4000),
     DB_USERNAME: joi.string().required(),
-    DB_PASSWORD: joi.string().required()
+    DB_PASSWORD: joi.string().required(),
+    DB_NAME: joi.string().required()
   })
   .unknown()
   .required();
@@ -28,7 +29,8 @@ export const getConfig = () => {
       env: envVars.NODE_ENV,
       port: envVars.PORT,
       dbUsername: envVars.DB_USERNAME,
-      dbPassword: envVars.DB_PASSWORD
+      dbPassword: envVars.DB_PASSWORD,
+      dbName: envVars.DB_NAME
     };
   }
 

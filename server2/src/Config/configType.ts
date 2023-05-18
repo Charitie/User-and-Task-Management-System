@@ -3,4 +3,5 @@ export type Config = {
   port: number;
   dbPassword: string;
   dbUsername: string;
+  dbName: string;
 };

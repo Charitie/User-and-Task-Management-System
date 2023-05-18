@@ -1,13 +1,12 @@
 import { GraphQLList } from 'graphql';
-import { TodoType } from '../TypeDefs/TodoType';
+import { ITodo, TodoType } from '../TypeDefs/TodoType';
+import Todo from '../../Database/Models/todolist';
 
 export const GET_TODO_LIST = {
   type: new GraphQLList(TodoType),
-  resolve(): string {
-    return 'Tarus';
+  resolve(): Promise<ITodo[]> {
+    console.log('WHERE AM I  >>>>>>>>>.......');
+
+    return Todo.find();
   }
 };
-
-export const newLife = 'My new life';
-
-// export default GET_TODO_LIST;
