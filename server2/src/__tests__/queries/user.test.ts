@@ -1,42 +1,59 @@
-import { graphqlHTTP } from 'express-graphql';
-import { schema } from '../../Schema/index';
+import request from 'supertest';
+import axios from 'axios';
+import { IUser } from '../../Schema/TypeDefs/UserType';
 
-const usersMock = [
-  { name: 'tarus', email: 'tarus@gmail.com', age: 89, password: 'regfef' },
-  { name: 'tarus', email: 'tarus@gmail.com', age: 89, password: 'regfef' },
-  { name: 'tarus', email: 'tarus@gmail.com', age: 89, password: 'regfef' }
-];
-// create a graphlhttp middleware
-const middleware = graphqlHTTP({
-  schema,
-  rootValue: {
-    id: 'user',
-    loaders: {
-      users: () => usersMock
-    }
+const graphQLEndpoint = 'http://localhost:5000/graphql';
+const users = [
+  {
+    age: 20,
+    email: 'charitytarus@gmail.com',
+    id: '646b153b743f5b1243f12353',
+    name: 'Charity Tarus',
+    password: 'Tarus@123'
+  },
+  {
+    age: 20,
+    email: 'maryloren@gmail.com',
+    id: '646b1ca697525a818589fbfb',
+    name: 'Mary Loren',
+    password: '$2b$10$ko9RjkMxTM6AWY3mL16.zOzO.gYu//2sDxZXfGWqBRmn2AeQv2hY6'
+  },
+  {
+    age: 30,
+    email: 'carenjoe@gmail.com',
+    id: '646b20495e0622211fe91476',
+    name: 'Caren Joe',
+    password: '$2b$10$mQtIA1dEHjVby5eRDv5w9u0vvM1scM61lfq2FdAIOAh3bXPlORWry'
   }
+];
+
+const postData = {
+  query: ` query Users {
+      getAllusers {
+        id
+        name
+        email
+        age
+        password
+      }
+    }`
+};
+
+async function fetchUsers() {
+  try {
+    const res = await axios.post(graphQLEndpoint, postData);
+    return res.data.data.getAllusers;
+  } catch (error) {
+    console.log('ERRR::', error);
+  }
+}
+
+describe('Get all users', () => {
+  test('fetch all my users using fetch', async () => {
+    const data: Promise<IUser[]> = await fetchUsers();
+    const usersListLength = (await data).length;
+
+    expect(data).toEqual(users);
+    expect(usersListLength).toBeGreaterThan(0);
+  });
 });
-
-// create a mocked request
-const request = {
-  method: 'POST',
-  headers: {},
-  body: { query: '{ user { users { name } } }' }
-};
-
-// create a mocked response, graphql middleware calls json function to set response data, so we stub it.
-const response = {
-  setHeader: jest.fn(),
-  end: jest.fn(),
-  json: jest.fn()
-};
-
-// call middleware function with mocked response and request
-await middleware(request, response);
-
-// get json's stub function arguments, this is actually a data returned by graphql middleware
-const responseData = response.json.mock.calls[0][0];
-//now we can do two things: check that the data returned is equal what we passed as a mock
-expect(responseData).toEqual(countriesMock);
-// or just use jest.snapshot to snapshot
-expect(responseData).toMatchSnapshot();
