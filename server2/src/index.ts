@@ -7,7 +7,8 @@ import { getConfig } from './Config/index,';
 import { schema } from './Schema';
 
 const { port } = getConfig();
-const main = async () => {
+
+export const main = async () => {
   const app = express();
   app.use(cors());
   app.use(express.json());
@@ -15,6 +16,7 @@ const main = async () => {
   if (app.get('env') === 'development') {
     app.use(morgan('combined'));
   }
+
   app.use(
     '/graphql',
     graphqlHTTP({

@@ -7,6 +7,7 @@ import {
   encryptPassword
 } from '../../Util/Helpers/passwordEncrypt';
 import { MessageType } from '../TypeDefs/MessageType';
+import { error } from 'console';
 
 export const ADD_USER = {
   type: UserType,
@@ -17,11 +18,16 @@ export const ADD_USER = {
     age: { type: new GraphQLNonNull(GraphQLInt) }
   },
   async resolve(_: any, args: any) {
-    // email exists
     // email format validation
     // password length, character validation
     // name validation
     const { name, email, password, age } = args;
+
+    const userExist = await User.findOne({ email });
+    if (userExist) {
+      throw Error('Email already taken');
+    }
+
     const passwordEncryptionArgs: IPasswordEncryption = {
       password,
       saltRounds: 10

@@ -14,14 +14,16 @@ const todoList = [
   { description: 'Baf of the Wind', task: 'fer', id: 8, completed: false }
 ];
 
-const { dbPassword, dbUsername, dbName } = getConfig();
+const { dbPassword, dbUsername, dbName, env } = getConfig();
 const connectionString = `mongodb+srv://${dbUsername}:${dbPassword}@cluster0.k4sugd7.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
 export async function connect() {
   try {
     await mongoose.connect(connectionString);
 
-    console.log('connected to MongoDB');
+    console.log(
+      `${env === 'test' ? 'connected to TEST MongoDB' : 'Connected to mongoDB'}`
+    );
   } catch (error) {
     console.log('DB ERROR::: ', error);
   }

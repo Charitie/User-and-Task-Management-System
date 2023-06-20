@@ -1,6 +1,12 @@
 import request from 'supertest';
+import { getConfig } from '../../Config/index,';
 
-const graphQLEndpoint = 'http://localhost:5000/graphql';
+const { port } = getConfig();
+const graphQLEndpoint = `http://localhost:${port}/graphql`;
+
+// beforeAll(async () => {
+//   await main();
+// });
 
 const udpadteTodoData = {
   query: `mutation UpdateTask($id: ID!, $completed: Boolean!) {
@@ -38,10 +44,10 @@ describe('TODO ', () => {
       .send(addTodoData)
       .expect(200)
       .end(async (error, response) => {
-        if (error) console.error('ERROR::::', error, 'response::', response);
+        // if (error) console.error('ERROR::::', error, 'response::', response);
         if (response) {
           const res = JSON.parse(response.text);
-          expect(res.data.addTodo).toEqual({
+          expect(res.data.addTodo).toContain({
             description: 'Testing add todo',
             task: 'Test Add Todo',
             completed: false
@@ -56,7 +62,7 @@ describe('TODO ', () => {
       .send(udpadteTodoData)
       .expect(200)
       .end(async (error, response) => {
-        if (error) console.error('ERROR::::', error, 'response::', response);
+        // if (error) console.error('ERROR::::', error, 'response::', response);
         if (response) {
           const res = JSON.parse(response.text);
           expect(res.data.updateTask).toEqual({

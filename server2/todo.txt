@@ -1,0 +1,23 @@
+1. create user
+2. edit user
+3. delete user(soft delete)
+4. assign task
+5. unassign task
+6. fetch users
+7. fetch single user
+8. fetch user's task
+9. create task
+10. update task status(todo, doing, done),
+11. assign task to user(admin)
+12. user roles (admin, user)
+13. edit task (title, description)
+14. notification on new task
+15. task timelines
+16. analytics=>
+     task completion rate-> tied to a user-> 
+     performance rate-> from rating (1-5)
+        5 the excellent-green, 
+        4-best-light green, 
+        3-good-yellow-green, 
+        2-bad-, 
+        1 the worst-red
