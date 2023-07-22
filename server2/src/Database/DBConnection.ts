@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { getConfig } from '../Config/index,';
 
 import Todo from './Models/todolist';
+import User from './Models/users';
 
 const todoList = [
   { description: 'Name of the Wind', task: 'Fantasy', id: 1, completed: false },
@@ -31,13 +32,13 @@ export async function connect() {
 
 // const seedDB = async () => {
 //   //   await Author.deleteMany({});
-//   // await Book.deleteMany({});
+//   await User.deleteMany({});
 //   //   await Author.insertMany(authors);
-//   await Todo.insertMany(todoList);
+//   // await Todo.insertMany(todoList);
 // };
 
-// seedDB();
-// .then(() => {
-//   mongoose.connection.close();
-// })
-// .catch((err) => console.log('seed error::', err));
+// seedDB()
+//   .then(() => {
+//     mongoose.connection.close();
+//   })
+//   .catch((err) => console.log('seed error::', err));

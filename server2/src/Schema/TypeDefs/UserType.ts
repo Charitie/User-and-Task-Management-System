@@ -12,7 +12,8 @@ export const UserType = new GraphQLObjectType({
     name: { type: GraphQLString },
     email: { type: GraphQLString },
     password: { type: GraphQLString },
-    age: { type: GraphQLInt }
+    age: { type: GraphQLInt },
+    roleId: { type: GraphQLString }
   })
 });
 
@@ -21,6 +22,7 @@ export interface IUser {
   email: string;
   password: boolean;
   age: number;
+  roleId: string;
 }
 
 export interface IPasswordEncryption {

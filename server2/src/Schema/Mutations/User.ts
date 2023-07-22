@@ -1,13 +1,12 @@
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from 'graphql';
 
-import { IPasswordEncryption, UserType } from '../TypeDefs/UserType';
 import User from '../../Database/Models/users';
 import {
   comparePassword,
   encryptPassword
 } from '../../Util/Helpers/passwordEncrypt';
 import { MessageType } from '../TypeDefs/MessageType';
-import { error } from 'console';
+import { IPasswordEncryption, UserType } from '../TypeDefs/UserType';
 
 export const ADD_USER = {
   type: UserType,
@@ -15,13 +14,14 @@ export const ADD_USER = {
     name: { type: new GraphQLNonNull(GraphQLString) },
     email: { type: new GraphQLNonNull(GraphQLString) },
     password: { type: new GraphQLNonNull(GraphQLString) },
-    age: { type: new GraphQLNonNull(GraphQLInt) }
+    age: { type: new GraphQLNonNull(GraphQLInt) },
+    roleId: { type: new GraphQLNonNull(GraphQLString) }
   },
   async resolve(_: any, args: any) {
     // email format validation
     // password length, character validation
     // name validation
-    const { name, email, password, age } = args;
+    const { name, email, password, age, roleId } = args;
 
     const userExist = await User.findOne({ email });
     if (userExist) {
@@ -33,7 +33,13 @@ export const ADD_USER = {
       saltRounds: 10
     };
     const hashedPassword = await encryptPassword(passwordEncryptionArgs);
-    const user = await new User({ name, email, password: hashedPassword, age });
+    const user = await new User({
+      name,
+      email,
+      password: hashedPassword,
+      age,
+      roleId
+    });
     return user.save();
   }
 };
