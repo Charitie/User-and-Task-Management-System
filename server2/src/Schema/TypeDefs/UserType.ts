@@ -13,7 +13,8 @@ export const UserType = new GraphQLObjectType({
     email: { type: GraphQLString },
     password: { type: GraphQLString },
     age: { type: GraphQLInt },
-    roleId: { type: GraphQLString }
+    roleId: { type: GraphQLString },
+    token: { type: GraphQLString }
   })
 });
 
@@ -34,4 +35,9 @@ export interface IPasswordEncryption {
 export interface IPasswordComparison {
   password: string;
   storedHashedPassword: string | undefined; //TODO:: should not be undefine,
+}
+export interface IJWT {
+  payload: string | object | Buffer;
+  secretKey: string;
+  expiresIn: string;
 }

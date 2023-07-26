@@ -1,13 +1,16 @@
 import { GraphQLInt, GraphQLNonNull, GraphQLString } from 'graphql';
 
+import { getConfig } from '../../Config/index,';
 import User from '../../Database/Models/users';
+import createToken from '../../Util/Helpers/jwtHelper';
 import {
   comparePassword,
   encryptPassword
 } from '../../Util/Helpers/passwordEncrypt';
-import { MessageType } from '../TypeDefs/MessageType';
+import { LoginResponseType } from '../TypeDefs/MessageType';
 import { IPasswordEncryption, UserType } from '../TypeDefs/UserType';
 
+const { secretKey, expiresIn } = getConfig();
 export const ADD_USER = {
   type: UserType,
   args: {
@@ -40,12 +43,28 @@ export const ADD_USER = {
       age,
       roleId
     });
-    return user.save();
+
+    const createdUser = await user.save();
+
+    if (!createdUser) {
+      throw new Error('Failed to create user');
+    }
+
+    console.log('createdUser', createdUser);
+
+    //create token
+    const token = createToken({ id: createdUser._id }, secretKey, {
+      expiresIn
+    });
+
+    console.log('TOKEN::', token);
+
+    return { name, email, password, age, roleId, token };
   }
 };
 
 export const LOGIN_USER = {
-  type: MessageType,
+  type: LoginResponseType,
   args: {
     email: { type: new GraphQLNonNull(GraphQLString) },
     password: { type: new GraphQLNonNull(GraphQLString) }
@@ -58,6 +77,8 @@ export const LOGIN_USER = {
     */
     const { email, password } = args;
     const user = await User.findOne({ email });
+
+    console.log('user', user);
 
     if (!user) {
       return {
@@ -78,9 +99,20 @@ export const LOGIN_USER = {
           message: 'INVALID EMAIL OR PASSWORD'
         };
       } else {
+        //create token
+        const token = createToken({ id: user._id }, secretKey, {
+          expiresIn
+        });
+
+        const { name, email, roleId } = user;
+
         return {
+          name,
+          email,
+          roleId,
           successful: true,
-          message: 'LOGGED IN SUCCESSFULLY'
+          message: 'LOGGED IN SUCCESSFULLY',
+          token
         };
       }
     }

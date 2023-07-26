@@ -1,10 +1,14 @@
+import { applyMiddleware } from 'graphql-middleware';
+import { shield } from 'graphql-shield';
+
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
-import { GET_TODO_LIST } from './Queries/Todo';
-import { ADD_TODO, DELETE_TODO, UPDATE_TASK } from './Mutations/Todo';
-import { GET_ALL_USERS } from './Queries/User';
-import { ADD_USER, LOGIN_USER } from './Mutations/User';
 import { ADD_ROLE } from './Mutations/Role';
+import { ADD_TODO, DELETE_TODO, UPDATE_TASK } from './Mutations/Todo';
+import { ADD_USER, LOGIN_USER } from './Mutations/User';
 import { GET_ROLES } from './Queries/Role';
+import { GET_TODO_LIST } from './Queries/Todo';
+import { GET_ALL_USERS } from './Queries/User';
+import { isAuthenticated, isAuthorized } from '../Util/Middleware/auth';
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQuery',
@@ -27,7 +31,17 @@ const Mutation = new GraphQLObjectType({
   }
 });
 
-export const schema = new GraphQLSchema({
+const schema = new GraphQLSchema({
   query: RootQuery,
   mutation: Mutation
 });
+
+const permissions = shield(
+  {
+    RootQuery: { getRoles: isAuthenticated },
+    Mutation: { addUser: isAuthenticated, addRole: isAuthorized }
+  },
+  { debug: true }
+);
+
+export const schemaWithPermissions = applyMiddleware(schema, permissions);

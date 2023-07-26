@@ -2,9 +2,10 @@ import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import cors from 'cors';
 import morgan from 'morgan';
+
 import { connect } from './Database/DBConnection';
 import { getConfig } from './Config/index,';
-import { schema } from './Schema';
+import { schemaWithPermissions } from './Schema';
 
 const { port } = getConfig();
 
@@ -19,10 +20,18 @@ export const main = async () => {
 
   app.use(
     '/graphql',
-    graphqlHTTP({
-      schema,
-      graphiql: true
-    })
+
+    // graphqlHTTP(() => ({ schema: schemaWithPermissions }))
+    graphqlHTTP(async (request) => ({
+      schema: schemaWithPermissions,
+      // graphiql: true,
+      graphiql: { headerEditorEnabled: true },
+      context: {
+        // user: request.user,
+        headers: request.headers
+        // i18n: request.i18n
+      }
+    }))
   );
 
   app.get('/', (req, res) => {

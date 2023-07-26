@@ -9,7 +9,15 @@ export const ADD_ROLE = {
   },
   async resolve(_: any, args: any) {
     const { name } = args;
-    const role = await new Role({ name });
-    return role.save();
+
+    try {
+      const role = await new Role({ name });
+      const createdRole = await role.save();
+
+      console.log('ROLE::', createdRole);
+      return createdRole;
+    } catch (error) {
+      throw new Error('Failed to add role');
+    }
   }
 };

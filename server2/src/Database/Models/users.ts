@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-const emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+const emailRegex = /^([\w-.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
 const userSchema = new Schema({
   name: String,
