@@ -1,0 +1,8 @@
+ul {
+  font-size: 1.2rem;
+  list-style-type: lower-greek;
+  list-style-position: inside;
+  padding: 2rem;
+  background-color: aquamarine;
+  column-count: 3;
+}

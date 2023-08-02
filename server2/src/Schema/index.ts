@@ -38,7 +38,7 @@ const schema = new GraphQLSchema({
 
 const permissions = shield(
   {
-    RootQuery: { getRoles: isAuthenticated },
+    RootQuery: { getRoles: isAuthenticated, getTodoList: isAuthenticated },
     Mutation: { addUser: isAuthenticated, addRole: isAuthorized }
   },
   { debug: true }

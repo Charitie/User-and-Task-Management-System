@@ -1,0 +1,23 @@
+.user-form {
+  display: flex;
+  flex-direction: column;
+  background-color: teal;
+  width: 50%;
+  margin: 0 auto;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.user-form input,
+.user-form select {
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.user-form input:invalid,
+.user-form select:invalid {
+  background-color: ivory;
+  border: none;
+  outline: 2px solid red;
+  border-radius: 5px;
+}
