@@ -1,10 +1,17 @@
-import { GraphQLObjectType, GraphQLString, GraphQLBoolean } from 'graphql';
+import {
+  GraphQLBoolean,
+  GraphQLList,
+  GraphQLObjectType,
+  GraphQLString
+} from 'graphql';
+import { RoleType } from './RoleTypes';
 
 export const MessageType = new GraphQLObjectType({
   name: 'Message',
   fields: () => ({
     successful: { type: GraphQLBoolean },
-    message: { type: GraphQLString }
+    message: { type: GraphQLString },
+    data: { type: new GraphQLList(RoleType) }
   })
 });
 

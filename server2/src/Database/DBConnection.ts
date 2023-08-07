@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { getConfig } from '../Config/index,';
 
-import Todo from './Models/todolist';
+import Todo from './Models/todo';
 import User from './Models/users';
 
 const todoList = [

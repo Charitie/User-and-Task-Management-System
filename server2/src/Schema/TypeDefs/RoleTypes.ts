@@ -1,10 +1,17 @@
-import { GraphQLObjectType, GraphQLString, GraphQLID } from 'graphql';
+import {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLID,
+  GraphQLList
+} from 'graphql';
+import { PermissionType } from './PermissionType';
 
 export const RoleType = new GraphQLObjectType({
   name: 'Role',
   fields: () => ({
     id: { type: GraphQLID },
-    name: { type: GraphQLString }
+    name: { type: GraphQLString },
+    permissions: { type: new GraphQLList(PermissionType) }
   })
 });
 

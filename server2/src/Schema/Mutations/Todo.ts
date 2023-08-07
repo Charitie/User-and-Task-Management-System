@@ -5,7 +5,7 @@ import {
   GraphQLID
 } from 'graphql';
 import { ITodo, TodoType } from '../TypeDefs/TodoType';
-import Todo from '../../Database/Models/todolist';
+import Todo from '../../Database/Models/todo';
 import { MessageType } from '../TypeDefs/MessageType';
 
 export const ADD_TODO = {
