@@ -9,5 +9,6 @@ export const PermissionType = new GraphQLObjectType({
 });
 
 export interface IPermission {
-  right: string;
+  id?: string;
+  right?: string;
 }

@@ -5,7 +5,7 @@ import { GraphQLObjectType, GraphQLSchema } from 'graphql';
 import { ADD_ROLE, ASSIGN_PERMISSION_TO_ROLE } from './Mutations/Role';
 import { ADD_TODO, DELETE_TODO, UPDATE_TASK } from './Mutations/Todo';
 import { ADD_USER, LOGIN_USER } from './Mutations/User';
-import { GET_ROLES } from './Queries/Role';
+import { GET_ROLES, GET_ROLE_PERMISSIONS } from './Queries/Role';
 import { GET_TODO_LIST } from './Queries/Todo';
 import { GET_ALL_USERS } from './Queries/User';
 import { isAuthenticated, isAuthorized } from '../Util/Middleware/auth';
@@ -17,7 +17,8 @@ const RootQuery = new GraphQLObjectType({
     getAllusers: GET_ALL_USERS,
     loginUser: LOGIN_USER,
     getTodoList: GET_TODO_LIST,
-    getRoles: GET_ROLES
+    getRoles: GET_ROLES,
+    getRolePermissions: GET_ROLE_PERMISSIONS
   }
 });
 

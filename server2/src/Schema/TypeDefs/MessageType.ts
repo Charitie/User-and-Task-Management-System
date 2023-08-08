@@ -26,3 +26,9 @@ export const LoginResponseType = new GraphQLObjectType({
     token: { type: GraphQLString }
   })
 });
+
+export interface IResponse {
+  successful: boolean;
+  message: string;
+  data?: [string | object | undefined | null];
+}
