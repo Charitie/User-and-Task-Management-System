@@ -26,3 +26,8 @@ export interface IJWT {
   secretKey: string;
   expiresIn: string;
 }
+
+export interface ILoginUser {
+  email: string;
+  password: string;
+}

@@ -28,13 +28,13 @@ const AddUser = () => {
         // setFormData({ name: "", email: "", password: "", age: 0, roleId: "" });
         console.log(data, loading, error, reset);
       }
-    } catch (err) {
-      setErrorMessage(error?.message);
+    } catch (err: any) {
       console.log("err::", err, "ERROR::", error);
+      setErrorMessage(err.message);
     }
   };
 
-  console.log('msg::',errorMessage);
+  console.log("msg::", errorMessage);
   return (
     <form onSubmit={handleSubmitForm} className="user-form">
       <Loader loading={roles.loading} error={roles.error} />

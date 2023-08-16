@@ -15,7 +15,6 @@ const RootQuery = new GraphQLObjectType({
   name: 'RootQuery',
   fields: {
     getAllusers: GET_ALL_USERS,
-    loginUser: LOGIN_USER,
     getTodoList: GET_TODO_LIST,
     getRoles: GET_ROLES,
     getRolePermissions: GET_ROLE_PERMISSIONS
@@ -25,6 +24,7 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
+    loginUser: LOGIN_USER,
     addUser: ADD_USER,
     addTodo: ADD_TODO,
     deleteTodo: DELETE_TODO,
