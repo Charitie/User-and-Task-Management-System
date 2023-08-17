@@ -82,7 +82,7 @@ export const LOGIN_USER = {
 
     if (!user) {
       return {
-        successful: true,
+        successful: false,
         message: 'INVALID EMAIL OR PASSWORD'
       };
     } else {

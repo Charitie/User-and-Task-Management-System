@@ -31,3 +31,12 @@ export interface ILoginUser {
   email: string;
   password: string;
 }
+
+export interface ILoginResponse {
+  successful: boolean;
+  message: string;
+  email: string;
+  name: string;
+  roleId: string;
+  token: string;
+}

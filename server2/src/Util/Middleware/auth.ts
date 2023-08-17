@@ -5,9 +5,10 @@ import { getConfig } from '../../Config/index,';
 
 const { secretKey } = getConfig();
 
-export const isAuthenticated = rule()(async (parent, args, ctx, info) => true);
+export const isAuthorized = rule()(async (parent, args, ctx, info) => true);
 export const canAddRole = rule()(async (parent, args, ctx, info) => false);
-export const isAuthorized = rule()(async (parent, args, ctx, info) => {
+
+export const isAuthenticated = rule()(async (parent, args, ctx, info) => {
   console.log('headers::', ctx.headers);
   const { authorization } = ctx.headers;
   if (!authorization) throw new Error('No token, authorization denied');

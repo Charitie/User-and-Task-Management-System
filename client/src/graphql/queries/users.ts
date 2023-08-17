@@ -12,11 +12,8 @@ export const USERS = gql`
   }
 `;
 
-export const LOGIN = gql`
-  query LoginUser($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
-      email
-      password
-    }
-  }
-`;
+// export const IS_LOGGED_IN = gql`
+//   query IsUserLoggedIn {
+//     isLoggedIn @client
+//   }
+// `;

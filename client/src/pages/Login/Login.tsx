@@ -1,16 +1,17 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 
 import { CustomInput } from "../../components/Form/CustomInput";
-import { ILoginUser } from "../../graphql/types/userTypes";
-import { LOGIN } from "../../graphql/queries/users";
+import { ILoginResponse, ILoginUser } from "../../graphql/types/userTypes";
+import { LOGIN } from "../../graphql/mutations/user";
 
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
   const [loginData, setLoginData] = useState<ILoginUser>({ email: "", password: "" });
-  //   const [errorMessage, setErrorMessage] = useState<ApolloError | undefined>();
-  const [loginUser, { data, loading, error, reset }] = useMutation<{ loginUser: ILoginUser }>(LOGIN);
+  const [failed, setFailed] = useState<boolean>(false);
+
+  const [loginUser, { data, loading, error, reset }] = useMutation<{ loginUser: ILoginResponse }>(LOGIN);
 
   const { email, password } = loginData;
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -23,18 +24,26 @@ export const Login: React.FC<LoginProps> = ({}) => {
     e.preventDefault();
     try {
       await loginUser({ variables: loginData });
-      if (!error) {
-        // setFormData({ name: "", email: "", password: "", age: 0, roleId: "" });
-        console.log(data, loading, error, reset);
+      if (data) {
+        const { name, email, roleId, token, successful } = data?.loginUser;
+        if (successful) {
+          localStorage.setItem("todotoken", token);
+          localStorage.setItem("user", JSON.stringify({ name, email, roleId }));
+        } else {
+          console.log("am here-----");
+          setFailed(true);
+        }
       }
     } catch (err: any) {
-      console.log("err::", err, "ERROR::", error);
-    //   setErrorMessage(err.message);
+      setFailed(true);
     }
   };
+
+  console.log(failed, data?.loginUser);
   return (
     <form onSubmit={handleLogin} className="user-form">
       <h1>Login</h1>
+      {failed && <p style={{ fontSize: "2rem", color: "red" }}>Failed to login...!! {data?.loginUser.message}</p>}
       <CustomInput
         type="email"
         name="email"
@@ -44,7 +53,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
         required={true}
       />
 
-      <input
+      <CustomInput
         type="password"
         name="password"
         value={password}
@@ -52,7 +61,7 @@ export const Login: React.FC<LoginProps> = ({}) => {
         placeholder="Password"
         required
       />
-      {/* <input type="submit" value="Add User" disabled={loading} /> */}
+      <CustomInput type="submit" value="LOGIN" disabled={loading} />
     </form>
   );
 };

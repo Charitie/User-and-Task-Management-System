@@ -12,3 +12,15 @@ export const ADD_USER = gql`
   }
 `;
 
+export const LOGIN = gql`
+  mutation LoginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      successful
+      message
+      email
+      name
+      roleId
+      token
+    }
+  }
+`;
